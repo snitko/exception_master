@@ -1,0 +1,20 @@
+<table>
+
+  <tr>
+    <td>
+      <h3><%= e.class.to_s %>: <%= e.message %></h3>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <p>Backtrace:</p>
+      <code>
+        <% e.backtrace.each do |line| %>
+          <%= line %><br/>
+        <% end %>
+      </code>
+    </td>
+  </tr>
+
+</table>
