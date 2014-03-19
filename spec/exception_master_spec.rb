@@ -17,4 +17,10 @@ describe ExceptionMaster do
     expect { ExceptionMaster.new(raise_error: true, email_settings: { to: 'exception-master-receiver@localhost'}).watch { 1/0 } }.to raise_exception
   end
 
+  it "doesn't deliver when deliver_email flag is set to false" do
+    Pony.should_receive(:mail).exactly(0).times
+    expect { ExceptionMaster.new(raise_error: true, deliver_email: false, email_settings: { to: 'exception-master-receiver@localhost'}).watch { 1/0 } }.to raise_exception
+
+  end
+
 end

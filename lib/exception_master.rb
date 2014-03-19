@@ -5,11 +5,12 @@ class ExceptionMaster
 
   attr_reader :email_config
 
-  def initialize(raise_error: true, email_config: {})
+  def initialize(raise_error: true, deliver_email: true, email_config: {})
 
-    @email_config = { via: :sendmail, from: 'exception-master@localhost', subject: 'Error' }
+    @email_config  = { via: :sendmail, from: 'exception-master@localhost', subject: 'Error' }
     @email_config.merge!(email_config)
-    @raise_error  = raise_error
+    @raise_error   = raise_error
+    @deliver_email = deliver_email
 
     if @email_config[:to].nil?
       raise "Please specify email addresses of email recipients using :to key in email_config attr (value should be array)"
@@ -20,7 +21,9 @@ class ExceptionMaster
   def watch
     yield
   rescue Exception => e
-    Pony.mail(@email_config.merge({html_body: error_to_html(e)}))
+    if @deliver_email
+      Pony.mail(@email_config.merge({html_body: error_to_html(e)}))
+    end
     raise(e) if @raise_error
   end
 
