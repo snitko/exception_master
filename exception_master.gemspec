@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "exception_master"
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roman Snitko"]
@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
     "README.md",
     "Rakefile",
     "VERSION",
+    "exception_master.gemspec",
     "lib/exception_master.rb",
     "spec/exception_master_spec.rb",
     "views/error.html.erb"
