@@ -21,10 +21,12 @@ class ExceptionMaster
   def watch
     yield
   rescue Exception => e
-    if @deliver_email
-      Pony.mail(@email_config.merge({html_body: error_to_html(e)}))
-    end
-    raise(e) if @raise_error
+    deliver_exception(e) if @deliver_email
+    raise(e) and exit if @raise_error
+  end
+
+  def deliver_exception(e)
+    Pony.mail(@email_config.merge({html_body: error_to_html(e)}))
   end
 
 
