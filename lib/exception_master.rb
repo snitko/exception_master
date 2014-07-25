@@ -24,7 +24,13 @@ class ExceptionMaster
     yield
   rescue Exception => e
     deliver_exception(e) if @deliver_email
-    raise(e) and exit if @raise_error
+    if @raise_error
+      raise(e) and exit 
+    elsif @environment == 'development'
+      puts "\n\nException raised: " + e.inspect
+      puts "\nTraceback:\n"
+      e.backtrace.each { |line| puts "   " + line }
+    end
   end
 
   def deliver_exception(e)
